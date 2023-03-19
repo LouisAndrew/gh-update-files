@@ -1,0 +1,24 @@
+{
+  "name": "@louisandrew3/gh-update-files",
+  "version": "0.0.0",
+  "description": "Function to update files in a GitHub repository via API",
+  "main": "louisandrew3/gh-update-files/dist/index.cjs",
+  "module": "louisandrew3/gh-update-files/dist/index.js",
+  "typings": "louisandrew3/gh-update-files/dist/index.d.tss",
+  "author": "Louis Andrew <louisandrew3@gmail.com> (https://louis-andrew.com/)",
+  "type": "module",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@louisandrew3/eslint-config": "1.4.2",
+    "@rollup/plugin-typescript": "11.0.0",
+    "esbuild": "0.17.12",
+    "rollup": "3.19.1",
+    "rollup-plugin-dts": "5.3.0",
+    "rollup-plugin-esbuild": "5.0.0",
+    "typescript": "5.0.2"
+  }
+}
