@@ -7,6 +7,9 @@
   "typings": "louisandrew3/gh-update-files/dist/index.d.tss",
   "author": "Louis Andrew <louisandrew3@gmail.com> (https://louis-andrew.com/)",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "rollup -c"
   },
@@ -15,10 +18,18 @@
   "devDependencies": {
     "@louisandrew3/eslint-config": "1.4.2",
     "@rollup/plugin-typescript": "11.0.0",
+    "@types/node": "18.15.3",
     "esbuild": "0.17.12",
     "rollup": "3.19.1",
     "rollup-plugin-dts": "5.3.0",
     "rollup-plugin-esbuild": "5.0.0",
+    "ts-node": "10.9.1",
     "typescript": "5.0.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@octokit/core": "4.2.0"
   }
 }
