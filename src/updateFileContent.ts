@@ -11,7 +11,7 @@ type GetNewFileContentArgs = {
 
 export const updateFileContent = async (
   octokit: Octokit,
-  githubArgs: GitHubOctokitArgs & { sha: string },
+  githubArgs: GitHubOctokitArgs & { sha: string | null },
   content: string
 ) => {
   const { owner, path, repo, sha } = githubArgs;
@@ -21,9 +21,9 @@ export const updateFileContent = async (
     repo,
     owner,
     path,
-    sha,
     content: convertUtfToBase64(content),
     message: "@louisandrew3/gh-update-files: Append file content",
+    ...(sha && { sha }),
   });
 };
 

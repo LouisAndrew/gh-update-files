@@ -8,8 +8,7 @@ import {
 } from "./updateFileContent.js";
 
 type UpdateMode = "append" | "prepend" | "replace";
-
-export type Args<T extends UpdateMode> = {
+type BaseArgs = {
   /**
    * Owner of the GitHub repository.
    */
@@ -29,21 +28,33 @@ export type Args<T extends UpdateMode> = {
   /**
    * Mode of updating the content.
    */
-  updateMode: T;
+  updateMode: UpdateMode;
   /**
    * Content to be appended, prepended, or replaced to the corresponding file.
    */
   content: string;
   /**
-   * Whether a new line should be added before (when appending) or after (when prepending) the content.
+   * Creates new file on the repository if path doesn't exist.
    * @default false
    */
-  addNewLine: T extends "append" | "prepend" ? boolean : undefined;
+  createIfNotExists?: boolean;
 };
 
-const isAppendPrependMode = (
-  args: Args<UpdateMode>
-): args is Args<"append" | "prepend"> =>
+export type Args =
+  | (BaseArgs & {
+      updateMode: "append" | "prepend";
+      /**
+       * Whether a new line should be added before (when appending) or after (when prepending) the content.
+       * @default false
+       */
+      addNewLine: boolean;
+    })
+  | (BaseArgs & {
+      updateMode: "replace";
+      addNewLine?: never;
+    });
+
+const isAppendPrependMode = (args: Args): args is Args =>
   ["prepend", "append"].includes(args.updateMode);
 
 /**
@@ -51,16 +62,23 @@ const isAppendPrependMode = (
  * @throws Native errors from GitHub's `@octokit/core` library.
  * @returns A boolean value, indicating whether the file was updated successfully.
  */
-const githubUpdateFile = async <T extends UpdateMode>(
-  args: Args<T>
-): Promise<boolean> => {
-  const { owner, repo, path, accessToken, updateMode, content } = args;
+const githubUpdateFile = async (args: Args): Promise<boolean> => {
+  const {
+    owner,
+    repo,
+    path,
+    accessToken,
+    updateMode,
+    content,
+    createIfNotExists = false,
+  } = args;
 
   const octokit = new Octokit({
     auth: accessToken,
   });
 
   const fileContent = await getFileContent(octokit, { owner, repo, path });
+
   if (fileContent) {
     const { sha } = fileContent;
     const updateFileGithubArgs = { owner, repo, path, sha };
@@ -87,6 +105,11 @@ const githubUpdateFile = async <T extends UpdateMode>(
       await updateFileContent(octokit, updateFileGithubArgs, content);
     }
 
+    return true;
+  }
+
+  if (createIfNotExists) {
+    await updateFileContent(octokit, { owner, repo, path, sha: null }, content);
     return true;
   }
 
