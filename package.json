@@ -2,9 +2,9 @@
   "name": "@louisandrew3/gh-update-files",
   "version": "0.0.0",
   "description": "Function to update files in a GitHub repository via API",
-  "main": "louisandrew3/gh-update-files/dist/@louisandrew3/index.cjs",
-  "module": "louisandrew3/gh-update-files/dist/@louisandrew3/index.js",
-  "typings": "louisandrew3/gh-update-files/dist/@louisandrew3/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
   "author": "Louis Andrew <louisandrew3@gmail.com> (https://louis-andrew.com/)",
   "type": "module",
   "files": [
