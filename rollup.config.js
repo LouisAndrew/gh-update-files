@@ -1,9 +1,7 @@
-import { createRequire } from "node:module";
-
 import dts from "rollup-plugin-dts";
 import esbuild from "rollup-plugin-esbuild";
 
-const name = createRequire(import.meta.url)("./package.json").name;
+const entry = "index";
 const outDir = "dist/";
 
 const bundle = (config) => ({
@@ -17,12 +15,12 @@ export default [
     plugins: [esbuild()],
     output: [
       {
-        file: `${outDir}${name}.cjs`,
+        file: `${outDir}${entry}.cjs`,
         format: "cjs",
         sourcemap: true,
       },
       {
-        file: `${outDir}${name}.js`,
+        file: `${outDir}${entry}.js`,
         format: "es",
         sourcemap: true,
       },
@@ -31,7 +29,7 @@ export default [
   bundle({
     plugins: [dts()],
     output: {
-      file: `${outDir}${name}.d.ts`,
+      file: `${outDir}${entry}.d.ts`,
       format: "es",
     },
   }),
