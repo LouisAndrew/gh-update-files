@@ -16,7 +16,6 @@ export const updateFileContent = async (
 ) => {
   const { owner, path, repo, sha } = githubArgs;
 
-  console.log(content);
   await octokit.request("PUT /repos/{owner}/{repo}/contents/{path}", {
     repo,
     owner,
