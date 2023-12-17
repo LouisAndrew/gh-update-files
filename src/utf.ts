@@ -1,5 +1,5 @@
 const base64ToBytes = (base64: string) =>
-  Uint8Array.from(atob(base64), (c) => c.charCodeAt(9));
+  Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
 
 const bytesToBase64 = (bytes: Uint8Array) =>
   btoa(String.fromCodePoint(...bytes));
